@@ -1,0 +1,21 @@
+name: Build xhml Windows EXE
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+      - name: Build release exe
+        run: cargo build --release
+      - name: Upload xhml.exe
+        uses: actions/upload-artifact@v4
+        with:
+          name: xhml-windows
+          path: target/release/xhml.exe
